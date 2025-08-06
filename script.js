@@ -1,167 +1,153 @@
-// Mobile Menu Toggle
-document.querySelector('.menu-toggle').addEventListener('click', () => {
-    document.querySelector('nav ul').classList.toggle('active');
-});
+// Simple translations for demo (expand as needed)
+const translations = {
+    en: {
+        heroTitle: "Empowering Minds Through Chess",
+        heroText: "Join us in promoting chess education, strategy, and community growth.",
+        donate: "Support Our Mission",
+        events: "Upcoming Events",
+        puzzle: "Chess Puzzle of the Day",
+        puzzleText: "Can you find the best move for White?",
+        hint: "Get Hint",
+        solution: "Show Solution"
+    },
+    fr: {
+        heroTitle: "Valoriser les esprits grâce aux échecs",
+        heroText: "Rejoignez-nous pour promouvoir l'éducation aux échecs, la stratégie et la croissance communautaire.",
+        donate: "Soutenez notre mission",
+        events: "Événements à venir",
+        puzzle: "Problème d'échecs du jour",
+        puzzleText: "Pouvez-vous trouver le meilleur coup pour les Blancs ?",
+        hint: "Obtenir un indice",
+        solution: "Voir la solution"
+    },
+    es: {
+        heroTitle: "Empoderando mentes a través del ajedrez",
+        heroText: "Únete a nosotros para promover la educación de ajedrez, la estrategia y el crecimiento comunitario.",
+        donate: "Apoya nuestra misión",
+        events: "Próximos eventos",
+        puzzle: "Problema de ajedrez del día",
+        puzzleText: "¿Puedes encontrar la mejor jugada para las blancas?",
+        hint: "Obtener pista",
+        solution: "Mostrar solución"
+    },
+    de: {
+        heroTitle: "Geistige Förderung durch Schach",
+        heroText: "Begleiten Sie uns bei der Förderung von Schachbildung, Strategie und Gemeinschaft.",
+        donate: "Unterstützen Sie unsere Mission",
+        events: "Bevorstehende Veranstaltungen",
+        puzzle: "Schachrätsel des Tages",
+        puzzleText: "Können Sie den besten Zug für Weiß finden?",
+        hint: "Tipp erhalten",
+        solution: "Lösung anzeigen"
+    },
+    zh: {
+        heroTitle: "通过国际象棋启迪心灵",
+        heroText: "加入我们，推广国际象棋教育、策略和社区发展。",
+        donate: "支持我们的使命",
+        events: "即将举行的活动",
+        puzzle: "每日国际象棋难题",
+        puzzleText: "你能找到白方的最佳着法吗？",
+        hint: "获取提示",
+        solution: "显示答案"
+    },
+    ar: {
+        heroTitle: "تمكين العقول من خلال الشطرنج",
+        heroText: "انضم إلينا في تعزيز تعليم الشطرنج والاستراتيجية ونمو المجتمع.",
+        donate: "ادعم مهمتنا",
+        events: "الأحداث القادمة",
+        puzzle: "لغز الشطرنج اليومي",
+        puzzleText: "هل يمكنك إيجاد أفضل نقلة للأبيض؟",
+        hint: "احصل على تلميح",
+        solution: "عرض الحل"
+    },
+    pt: {
+        heroTitle: "Capacitando mentes através do xadrez",
+        heroText: "Junte-se a nós para promover educação, estratégia e crescimento comunitário no xadrez.",
+        donate: "Apoie nossa missão",
+        events: "Próximos eventos",
+        puzzle: "Desafio de xadrez do dia",
+        puzzleText: "Você consegue encontrar o melhor lance para as brancas؟",
+        hint: "Obter dica",
+        solution: "Mostrar solução"
+    },
+    sw: {
+        heroTitle: "Kuimarisha Akili Kupitia Chess",
+        heroText: "Jiunge nasi kukuza elimu ya chess, mikakati na maendeleo ya jamii.",
+        donate: "Saidia Dhamira Yetu",
+        events: "Matukio Yanayokuja",
+        puzzle: "Fumbo la Chess la Siku",
+        puzzleText: "Je, unaweza kupata hatua bora kwa White؟",
+        hint: "Pata Dokezo",
+        solution: "Onyesha Suluhisho"
+    }
+};
 
-// Events Slider
-let currentSlide = 0;
-const slides = document.querySelectorAll('.slide');
-const totalSlides = slides.length;
-
-document.querySelector('.next-btn').addEventListener('click', () => {
-    currentSlide = (currentSlide + 1) % totalSlides;
-    updateSlider();
-});
-
-document.querySelector('.prev-btn').addEventListener('click', () => {
-    currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
-    updateSlider();
-});
-
-function updateSlider() {
-    slides.forEach((slide, index) => {
-        slide.style.transform = `translateX(-${currentSlide * 100}%)`;
-    });
+function setLanguage(lang) {
+    const t = translations[lang] || translations.en;
+    // Update hero section
+    const heroTitle = document.querySelector('.hero-content h2');
+    if (heroTitle) heroTitle.textContent = t.heroTitle;
+    const heroText = document.querySelector('.hero-content p');
+    if (heroText) heroText.textContent = t.heroText;
+    const donateBtn = document.querySelector('.hero-content .btn');
+    if (donateBtn) donateBtn.textContent = t.donate;
+    // Update events section
+    const eventsTitle = document.querySelector('#events h2');
+    if (eventsTitle) eventsTitle.textContent = t.events;
+    // Update puzzle section
+    const puzzleTitle = document.querySelector('.puzzle h2');
+    if (puzzleTitle) puzzleTitle.textContent = t.puzzle;
+    const puzzleText = document.querySelector('.puzzle p');
+    if (puzzleText) puzzleText.textContent = t.puzzleText;
+    const hintBtn = document.getElementById('hint-btn');
+    if (hintBtn) hintBtn.textContent = t.hint;
+    const solutionBtn = document.getElementById('solution-btn');
+    if (solutionBtn) solutionBtn.textContent = t.solution;
 }
 
-// Simple Chessboard (Interactive Puzzle)
-const chessboard = document.getElementById('chessboard');
-for (let i = 0; i < 8; i++) {
-    for (let j = 0; j < 8; j++) {
-        const square = document.createElement('div');
-        square.classList.add('square');
-        square.style.backgroundColor = (i + j) % 2 === 0 ? '#f0d9b5' : '#b58863';
-        chessboard.appendChild(square);
-    }
-}
-
-// Form Submissions (Simulated)
-document.getElementById('donation-form').addEventListener('submit', (e) => {
-    e.preventDefault();
-    alert('Thank you for your donation!');
-    e.target.reset();
+document.getElementById('language-select').addEventListener('change', function () {
+    setLanguage(this.value);
 });
 
-document.getElementById('contact-form').addEventListener('submit', (e) => {
-    e.preventDefault();
-    alert('Message sent! We will get back to you soon.');
-    e.target.reset();
-});
+// Set default language on load
+window.onload = function () {
+    setLanguage(document.getElementById('language-select').value);
+};
 
-// Hint & Solution Buttons
-document.getElementById('hint-btn').addEventListener('click', () => {
-    alert('Hint: Control the center and look for a fork!');
-});
+const slides = document.querySelectorAll('.hero-bg-slide');
+let current = 0;
+setInterval(() => {
+    slides[current].classList.remove('active');
+    slides[current].classList.add('prev');
+    current = (current + 1) % slides.length;
+    slides[current].classList.add('active');
+    slides[current].classList.remove('prev');
+}, 4000);
 
-document.getElementById('solution-btn').addEventListener('click', () => {
-    alert('Solution: Qh5+ forces the king to move, leading to a winning position.');
-});
 
-//mpesa integration
-document.getElementById('mpesa-btn').addEventListener('click', () => {
-    alert('MPESA integration is currently under development. Stay tuned for updates!');
-});
-// Mpesa Daraja Integration Example
-document.getElementById('mpesa-pay-btn').onclick = function() {
-    // Replace with your Daraja API endpoint and credentials
-    const amount = prompt("Enter amount to donate via Mpesa:");
-    if (!amount || isNaN(amount) || amount <= 0) return;
+document.addEventListener('DOMContentLoaded', () => {
+    const hamburger = document.querySelector('.hamburger-menu');
+    const navMenu = document.querySelector('.nav-menu');
 
-    fetch('https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest', {
-        method: 'POST',
-        headers: {
-            'Authorization': 'Bearer YOUR_ACCESS_TOKEN',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            "BusinessShortCode": "123456",
-            "Password": "GENERATED_PASSWORD",
-            "Timestamp": "YYYYMMDDHHMMSS",
-            "TransactionType": "CustomerPayBillOnline",
-            "Amount": amount,
-            "PartyA": "USER_PHONE_NUMBER",
-            "PartyB": "123456",
-            "PhoneNumber": "USER_PHONE_NUMBER",
-            "CallBackURL": "https://yourdomain.com/mpesa/callback",
-            "AccountReference": "MindMoveChess",
-            "TransactionDesc": "Donation"
-        })
-    })
-    .then(response => response.json())
-    .then(data => {
-        alert("Mpesa STK Push initiated. Check your phone to complete the payment.");
-    })
-    .catch(error => {
-        alert("Error initiating Mpesa payment.");
+    // Toggle menu visibility on hamburger click
+    hamburger.addEventListener('click', () => {
+        navMenu.classList.toggle('active');
     });
-};
 
-//call button functionality
-document.getElementById('call-btn').onclick = function() {
-    // This will prompt the device to start a phone call if supported
-    window.location.href = "tel:+2540111231789";
-};
-//contactform message display
-document.getElementById('contact-form').onsubmit = function(e) {
-    e.preventDefault();
-    document.getElementById('message-status').style.display = 'block';
-    document.getElementById('message-status').textContent = "Thank you! Your message has been sent.";
-    this.reset();
-};
+    // Close menu when a link is clicked (useful for single-page apps or when navigating)
+    const navLinks = document.querySelectorAll('.nav-links a');
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            if (navMenu.classList.contains('active')) {
+                navMenu.classList.remove('active');
+            }
+        });
+    });
 
-// Dynamic youth chess activities data
-const programs = [
-    {
-        icon: "fas fa-graduation-cap",
-        title: "Youth Chess Clubs",
-        desc: "Weekly sessions for kids to learn and compete."
-    },
-    {
-        icon: "fas fa-trophy",
-        title: "Tournaments",
-        desc: "Local & national chess competitions."
-    },
-    {
-        icon: "fas fa-chalkboard-teacher",
-        title: "Teacher Training",
-        desc: "Workshops for educators to integrate chess in schools."
-    },
-    {
-        icon: "fas fa-puzzle-piece",
-        title: "Chess Puzzles & Challenges",
-        desc: "Interactive puzzle sessions to boost problem-solving skills."
-    },
-    {
-        icon: "fas fa-users",
-        title: "Team Matches",
-        desc: "Group competitions to encourage teamwork and strategy."
-    },
-    {
-        icon: "fas fa-laptop",
-        title: "Online Chess Camps",
-        desc: "Virtual chess camps with live coaching and games."
-    },
-    {
-        icon: "fas fa-lightbulb",
-        title: "Mentorship Program",
-        desc: "Pairing young players with experienced mentors for growth."
-    },
-    {
-        icon: "fas fa-book",
-        title: "Chess & Life Skills Workshops",
-        desc: "Sessions combining chess learning with leadership and critical thinking."
-    }
-];
-
-// Render programs dynamically
-const container = document.getElementById('programs-container');
-programs.forEach(program => {
-    const card = document.createElement('div');
-    card.className = 'program-card';
-    card.innerHTML = `
-        <i class="${program.icon}"></i>
-        <h3>${program.title}</h3>
-        <p>${program.desc}</p>
-    `;
-    container.appendChild(card);
+    // Optional: Close the menu if clicked outside
+    document.addEventListener('click', (event) => {
+        if (!navMenu.contains(event.target) && !hamburger.contains(event.target) && navMenu.classList.contains('active')) {
+            navMenu.classList.remove('active');
+        }
+    });
 });
