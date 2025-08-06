@@ -428,4 +428,141 @@ footer {
         opacity: 1;
         transform: translateY(0);
     }
+
+}
+/* Base styles (mobile-first approach) */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    overflow-x: hidden;
+    width: 100%;
+    min-height: 100vh;
+}
+
+/* Responsive typography */
+h1 { font-size: 2.5rem; }
+h2 { font-size: 2rem; }
+h3 { font-size: 1.75rem; }
+h4 { font-size: 1.5rem; }
+p { font-size: 1rem; }
+
+/* Container for content */
+.container {
+    width: 100%;
+    padding: 0 1rem;
+    margin: 0 auto;
+}
+
+/* Responsive images */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Flex utility classes */
+.flex {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.flex-column {
+    flex-direction: column;
+}
+
+/* Grid utility classes */
+.grid {
+    display: grid;
+    gap: 1rem;
+}
+
+/* Media Queries for different screen sizes */
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {
+    .container {
+        max-width: 540px;
+    }
+    
+    h1 { font-size: 2.75rem; }
+    h2 { font-size: 2.25rem; }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+    .container {
+        max-width: 720px;
+    }
+    
+    h1 { font-size: 3rem; }
+    h2 { font-size: 2.5rem; }
+    
+    /* Example of changing layout at this breakpoint */
+    .md-flex-row {
+        flex-direction: row;
+    }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+    .container {
+        max-width: 960px;
+    }
+    
+    h1 { font-size: 3.25rem; }
+    h2 { font-size: 2.75rem; }
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+    .container {
+        max-width: 1140px;
+    }
+    
+    h1 { font-size: 3.5rem; }
+    h2 { font-size: 3rem; }
+}
+
+/* For very large screens */
+@media (min-width: 1400px) {
+    .container {
+        max-width: 1320px;
+    }
+}
+
+/* Utility classes for responsive spacing */
+.p-1 { padding: 0.5rem; }
+.p-2 { padding: 1rem; }
+.p-3 { padding: 1.5rem; }
+
+@media (min-width: 768px) {
+    .md-p-1 { padding: 0.5rem; }
+    .md-p-2 { padding: 1rem; }
+    .md-p-3 { padding: 1.5rem; }
+}
+
+/* Hide elements on different screens */
+.hide-on-mobile {
+    display: none;
+}
+
+@media (min-width: 768px) {
+    .hide-on-mobile {
+        display: block;
+    }
+    
+    .hide-on-desktop {
+        display: none;
+    }
 }
