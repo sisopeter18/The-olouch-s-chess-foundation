@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,14 +8,17 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
+
 <body>
     <!-- Top left fixed button for Sign Up only -->
     <div style="position:fixed; top:20px; left:20px; z-index:1000;">
         <button id="signup-btn" class="btn" style="margin-bottom:10px;">Sign Up</button>
     </div>
     <!-- Signup Modal -->
-    <div id="account-signup-modal" style="display:flex; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.5); align-items:center; justify-content:center;">
-        <form id="account-signup-form" style="background:#fff; padding:20px; border-radius:8px; max-width:400px; margin:auto;">
+    <div id="account-signup-modal"
+        style="display:flex; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.5); align-items:center; justify-content:center;">
+        <form id="account-signup-form"
+            style="background:#fff; padding:20px; border-radius:8px; max-width:400px; margin:auto;">
             <h3>Create Account</h3>
             <input type="text" name="fullname" placeholder="Full Name" required><br>
             <input type="text" name="idnumber" placeholder="ID Number" required><br>
@@ -35,7 +39,8 @@
                 <option value="Tertiary">UNIVERSITY/COLLEGE</option>
                 <option value="Adult">Adult (Not a Student)</option>
             </select><br>
-            <input type="text" name="school" id="school-input" placeholder="School Name (if student)" style="display:none;"><br>
+            <input type="text" name="school" id="school-input" placeholder="School Name (if student)"
+                style="display:none;"><br>
             <input type="text" name="phone" placeholder="Phone Number" required><br>
             <button type="submit" class="btn">Sign Up</button>
             <button type="button" class="btn" id="close-signup-modal" style="margin-left:10px;">Cancel</button>
@@ -43,74 +48,75 @@
         </form>
     </div>
 
-    
+
     <script>
-let users = [];
-let currentUser = null;
+        let users = [];
+        let currentUser = null;
 
-// Show/hide school input based on level selection
-document.getElementById('level-select').onchange = function() {
-    const val = this.value;
-    const schoolInput = document.getElementById('school-input');
-    if (val === "Primary" || val === "Secondary" || val === "Tertiary") {
-        schoolInput.style.display = "block";
-        schoolInput.required = true;
-    } else {
-        schoolInput.style.display = "none";
-        schoolInput.required = false;
-        schoolInput.value = "";
-    }
-};
+        // Show/hide school input based on level selection
+        document.getElementById('level-select').onchange = function () {
+            const val = this.value;
+            const schoolInput = document.getElementById('school-input');
+            if (val === "Primary" || val === "Secondary" || val === "Tertiary") {
+                schoolInput.style.display = "block";
+                schoolInput.required = true;
+            } else {
+                schoolInput.style.display = "none";
+                schoolInput.required = false;
+                schoolInput.value = "";
+            }
+        };
 
-// Show signup modal (always visible for demo)
-document.getElementById('close-signup-modal').onclick = function() {
-    document.getElementById('account-signup-modal').style.display = "none";
-    document.getElementById('account-signup-form').reset();
-    document.getElementById('school-input').style.display = "none";
-};
-// Handle signup
-document.getElementById('account-signup-form').onsubmit = function(e) {
-    e.preventDefault();
-    const form = e.target;
-    const user = {
-        fullname: form.fullname.value,
-        idnumber: form.idnumber.value,
-        username: form.username.value,
-        email: form.email.value,
-        password: form.password.value,
-        dob: form.dob.value,
-        gender: form.gender.value,
-        level: form.level.value,
-        school: form.school.value,
-        phone: form.phone.value
-    };
-    // Check if username or email exists
-    if (users.some(u => u.username === user.username)) {
-        alert("Username already exists.");
-        return;
-    }
-    if (users.some(u => u.email === user.email)) {
-        alert("Account with this email already exists.");
-        return;
-    }
-    users.push(user);
-    localStorage.setItem('users', JSON.stringify(users)); // Save to localStorage
-    alert("Account created successfully! You can now login.");
-    document.getElementById('account-signup-modal').style.display = "none";
-    form.reset();
-    document.getElementById('school-input').style.display = "none";
-    document.getElementById('account-login-modal').style.display = "flex";
-};
+        // Show signup modal (always visible for demo)
+        document.getElementById('close-signup-modal').onclick = function () {
+            document.getElementById('account-signup-modal').style.display = "none";
+            document.getElementById('account-signup-form').reset();
+            document.getElementById('school-input').style.display = "none";
+        };
+        // Handle signup
+        document.getElementById('account-signup-form').onsubmit = function (e) {
+            e.preventDefault();
+            const form = e.target;
+            const user = {
+                fullname: form.fullname.value,
+                idnumber: form.idnumber.value,
+                username: form.username.value,
+                email: form.email.value,
+                password: form.password.value,
+                dob: form.dob.value,
+                gender: form.gender.value,
+                level: form.level.value,
+                school: form.school.value,
+                phone: form.phone.value
+            };
+            // Check if username or email exists
+            if (users.some(u => u.username === user.username)) {
+                alert("Username already exists.");
+                return;
+            }
+            if (users.some(u => u.email === user.email)) {
+                alert("Account with this email already exists.");
+                return;
+            }
+            users.push(user);
+            localStorage.setItem('users', JSON.stringify(users)); // Save to localStorage
+            alert("Account created successfully! You can now login.");
+            document.getElementById('account-signup-modal').style.display = "none";
+            form.reset();
+            document.getElementById('school-input').style.display = "none";
+            document.getElementById('account-login-modal').style.display = "flex";
+        };
 
-// Show signup modal when Sign Up button is clicked
-document.getElementById('signup-btn').onclick = function() {
-    document.getElementById('account-signup-modal').style.display = "flex";
-};
+        // Show signup modal when Sign Up button is clicked
+        document.getElementById('signup-btn').onclick = function () {
+            document.getElementById('account-signup-modal').style.display = "flex";
+        };
 
-// Go to Login button
-document.getElementById('goto-login-btn').onclick = function() {
-    window.location.href = "login.html";
-};
-</script>
+        // Go to Login button
+        document.getElementById('goto-login-btn').onclick = function () {
+            window.location.href = "login.html";
+        };
+    </script>
 </body>
+
 </html>
