@@ -3,7 +3,7 @@ document.querySelector('.nav-bar-placeholder').innerHTML = `
         <!-- logo -->
         <div class="nav-logo" onclick="window.location.href = 'index.html'">
             <img src="chesslogo.png" alt="Logo">
-            <span>The Olouch's Chess Foundation</span>
+            <span>The Olouch Chess Foundation</span>
         </div>
 
         <!-- Hamburger Menu Button -->
@@ -218,4 +218,393 @@ setInterval(() => {
     current = (current + 1) % slides.length;
     slides[current].classList.add('active');
     slides[current].classList.remove('prev');
+
 }, 4000);
+// Mobile Menu Toggle
+document.querySelector('.menu-toggle').addEventListener('click', () => {
+    document.querySelector('nav ul').classList.toggle('active');
+});
+
+// Events Slider
+let currentSlide = 0;
+const slides = document.querySelectorAll('.slide');
+const totalSlides = slides.length;
+
+document.querySelector('.next-btn').addEventListener('click', () => {
+    currentSlide = (currentSlide + 1) % totalSlides;
+    updateSlider();
+});
+
+document.querySelector('.prev-btn').addEventListener('click', () => {
+    currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+    updateSlider();
+});
+
+function updateSlider() {
+    slides.forEach((slide, index) => {
+        slide.style.transform = `translateX(-${currentSlide * 100}%)`;
+    });
+}
+
+// Simple Chessboard (Interactive Puzzle)
+const chessboard = document.getElementById('chessboard');
+for (let i = 0; i < 8; i++) {
+    for (let j = 0; j < 8; j++) {
+        const square = document.createElement('div');
+        square.classList.add('square');
+        square.style.backgroundColor = (i + j) % 2 === 0 ? '#f0d9b5' : '#b58863';
+        chessboard.appendChild(square);
+    }
+}
+
+// Form Submissions (Simulated)
+document.getElementById('donation-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    alert('Thank you for your donation!');
+    e.target.reset();
+});
+
+document.getElementById('contact-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    alert('Message sent! We will get back to you soon.');
+    e.target.reset();
+});
+
+// Hint & Solution Buttons
+document.getElementById('hint-btn').addEventListener('click', () => {
+    alert('Hint: Control the center and look for a fork!');
+});
+
+document.getElementById('solution-btn').addEventListener('click', () => {
+    alert('Solution: Qh5+ forces the king to move, leading to a winning position.');
+});
+
+
+   const axios = require('axios');
+const crypto = require('crypto');
+
+// M-Pesa Configuration
+const mpesaConfig = {
+  // Sandbox or Production credentials
+  environment: 'sandbox', // 'sandbox' or 'production'
+  
+  // Sandbox credentials
+  sandbox: {
+    consumerKey: 'RkH13bbIBYasLSWLttEtxEneZedxppWX8P84j9muHP4v4c5e', // Replace with your sandbox consumer key
+    consumerSecret: 'bgaFUkC4UASTuVSH2lqGrLgIqRkJ5VK4xP9uNkDPu4UKWZFtAzFAIlbblUVUL5tP', // Replace with your sandbox consumer secret
+    shortCode: '174379', // Sandbox shortcode (Paybill or Buygoods)
+    initiatorName: 'testapi', // Sandbox initiator name
+    securityCredential: 'your_sandbox_security_credential', // Encrypted sandbox credential
+    passKey: 'your_sandbox_passkey', // Sandbox passkey
+    callbackURL: 'https://yourdomain.com/callback', // Your callback URL
+    baseURL: 'https://sandbox.safaricom.co.ke',
+  },
+  
+  // Production credentials
+  production: {
+    consumerKey: 'RkH13bbIBYasLSWLttEtxEneZedxppWX8P84j9muHP4v4c5e', // Replace with your production consumer key
+    consumerSecret: 'bgaFUkC4UASTuVSH2lqGrLgIqRkJ5VK4xP9uNkDPu4UKWZFtAzFAIlbblUVUL5tP', // Replace with your production consumer secret
+    shortCode: '174379', // Your business shortcode
+    initiatorName: 'your_initiator_name', // Your initiator name
+    securityCredential: 'your_production_security_credential', // Encrypted production credential
+    passKey: 'your_production_passkey', // Production passkey
+    callbackURL: 'https://yourdomain.com/callback', // Your production callback URL
+    baseURL: 'https://api.safaricom.co.ke',
+  },
+  
+  // Common configuration
+  transactionType: 'CustomerPayBillOnline', // or 'CustomerBuyGoodsOnline'
+  accountReference: 'The olouch chess foundation', // Your company name
+  transactionDesc: 'Payment for services', // Transaction description
+};
+
+// Get current config based on environment
+function getConfig() {
+  return mpesaConfig[mpesaConfig.environment];
+}
+
+// Generate access token
+async function generateAccessToken() {
+  const config = getConfig();
+  const consumerKey = config.consumerKey;
+  const consumerSecret = config.consumerSecret;
+  const auth = Buffer.from(`${consumerKey}:${consumerSecret}`).toString('base64');
+  
+  try {
+    const response = await axios.get(`${config.baseURL}/oauth/v1/generate?grant_type=client_credentials`, {
+      headers: {
+        'Authorization': `Basic ${auth}`
+      }
+    });
+    
+    return response.data.access_token;
+  } catch (error) {
+    console.error('Error generating access token:', error.response ? error.response.data : error.message);
+    throw error;
+  }
+}
+
+// Generate security credential (for production)
+function generateSecurityCredential(password) {
+  const config = getConfig();
+  const publicKey = `-----BEGIN PUBLIC KEY-----
+  YOUR_MPESA_PUBLIC_KEY_HERE
+  -----END PUBLIC KEY-----`;
+  
+  const buffer = Buffer.from(password, 'utf8');
+  const encrypted = crypto.publicEncrypt({
+    key: publicKey,
+    padding: crypto.constants.RSA_PKCS1_PADDING
+  }, buffer);
+  
+  return encrypted.toString('base64');
+}
+
+// Generate timestamp in required format (YYYYMMDDHHmmss)
+function generateTimestamp() {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, '0');
+  const day = String(now.getDate()).padStart(2, '0');
+  const hours = String(now.getHours()).padStart(2, '0');
+  const minutes = String(now.getMinutes()).padStart(2, '0');
+  const seconds = String(now.getSeconds()).padStart(2, '0');
+  
+  return `${year}${month}${day}${hours}${minutes}${seconds}`;
+}
+
+// Generate password for STK push
+function generatePassword() {
+  const config = getConfig();
+  const timestamp = generateTimestamp();
+  const shortCode = config.shortCode;
+  const passKey = config.passKey;
+  
+  const concatenated = `${shortCode}${passKey}${timestamp}`;
+  const buffer = Buffer.from(concatenated, 'utf8');
+  return buffer.toString('base64');
+}
+
+// Lipa Na M-Pesa Online (STK Push)
+async function initiateSTKPush(phone, amount, reference) {
+  try {
+    const accessToken = await generateAccessToken();
+    const config = getConfig();
+    const timestamp = generateTimestamp();
+    const password = generatePassword();
+    
+    const requestData = {
+      BusinessShortCode: config.shortCode,
+      Password: password,
+      Timestamp: timestamp,
+      TransactionType: mpesaConfig.transactionType,
+      Amount: amount,
+      PartyA: phone,
+      PartyB: config.shortCode,
+      PhoneNumber: phone,
+      CallBackURL: config.callbackURL,
+      AccountReference: reference || mpesaConfig.accountReference,
+      TransactionDesc: mpesaConfig.transactionDesc,
+    };
+    
+    const response = await axios.post(`${config.baseURL}/mpesa/stkpush/v1/processrequest`, requestData, {
+      headers: {
+        'Authorization': `Bearer ${accessToken}`,
+        'Content-Type': 'application/json'
+      }
+    });
+    
+    return response.data;
+  } catch (error) {
+    console.error('Error initiating STK Push:', error.response ? error.response.data : error.message);
+    throw error;
+  }
+}
+
+// C2B Register URL
+async function registerC2BUrl() {
+  try {
+    const accessToken = await generateAccessToken();
+    const config = getConfig();
+    
+    const requestData = {
+      ShortCode: config.shortCode,
+      ResponseType: 'Completed',
+      ConfirmationURL: `${config.callbackURL}/confirmation`,
+      ValidationURL: `${config.callbackURL}/validation`,
+    };
+    
+    const response = await axios.post(`${config.baseURL}/mpesa/c2b/v1/registerurl`, requestData, {
+      headers: {
+        'Authorization': `Bearer ${accessToken}`,
+        'Content-Type': 'application/json'
+      }
+    });
+    
+    return response.data;
+  } catch (error) {
+    console.error('Error registering C2B URL:', error.response ? error.response.data : error.message);
+    throw error;
+  }
+}
+
+// B2C Payment
+async function initiateB2CPayment(phone, amount, remarks) {
+  try {
+    const accessToken = await generateAccessToken();
+    const config = getConfig();
+    
+    const requestData = {
+      InitiatorName: config.initiatorName,
+      SecurityCredential: config.securityCredential,
+      CommandID: 'BusinessPayment', // or 'SalaryPayment', 'PromotionPayment'
+      Amount: amount,
+      PartyA: config.shortCode,
+      PartyB: phone,
+      Remarks: remarks || 'Payment',
+      QueueTimeOutURL: `${config.callbackURL}/b2c/timeout`,
+      ResultURL: `${config.callbackURL}/b2c/result`,
+      Occasion: 'Payment',
+    };
+    
+    const response = await axios.post(`${config.baseURL}/mpesa/b2c/v1/paymentrequest`, requestData, {
+      headers: {
+        'Authorization': `Bearer ${accessToken}`,
+        'Content-Type': 'application/json'
+      }
+    });
+    
+    return response.data;
+  } catch (error) {
+    console.error('Error initiating B2C payment:', error.response ? error.response.data : error.message);
+    throw error;
+  }
+}
+
+// Transaction Status Query
+async function checkTransactionStatus(transactionID) {
+  try {
+    const accessToken = await generateAccessToken();
+    const config = getConfig();
+    const timestamp = generateTimestamp();
+    
+    const requestData = {
+      Initiator: config.initiatorName,
+      SecurityCredential: config.securityCredential,
+      CommandID: 'TransactionStatusQuery',
+      TransactionID: transactionID,
+      PartyA: config.shortCode,
+      IdentifierType: '4', // 1=MSISDN, 2=Till, 4=Shortcode
+      ResultURL: `${config.callbackURL}/transaction/result`,
+      QueueTimeOutURL: `${config.callbackURL}/transaction/timeout`,
+      Remarks: 'Check transaction status',
+      Occasion: 'Transaction status',
+    };
+    
+    const response = await axios.post(`${config.baseURL}/mpesa/transactionstatus/v1/query`, requestData, {
+      headers: {
+        'Authorization': `Bearer ${accessToken}`,
+        'Content-Type': 'application/json'
+      }
+    });
+    
+    return response.data;
+  } catch (error) {
+    console.error('Error checking transaction status:', error.response ? error.response.data : error.message);
+    throw error;
+  }
+}
+
+// Example usage
+(async () => {
+  try {
+    // Example STK Push
+    const stkResponse = await initiateSTKPush('254712345678', '100', 'ORDER123');
+    console.log('STK Push Response:', stkResponse);
+    
+    // Example C2B URL registration
+    // const c2bResponse = await registerC2BUrl();
+    // console.log('C2B URL Registration Response:', c2bResponse);
+    
+    // Example B2C Payment
+    // const b2cResponse = await initiateB2CPayment('254712345678', '500', 'Salary payment');
+    // console.log('B2C Response:', b2cResponse);
+    
+    // Example Transaction Status Check
+    // const statusResponse = await checkTransactionStatus('OEI2AK4Q16');
+    // console.log('Transaction Status:', statusResponse);
+  } catch (error) {
+    console.error('Error in example usage:', error);
+  }
+})();
+};
+
+//call button functionality
+document.getElementById('call-btn').onclick = function() {
+    // This will prompt the device to start a phone call if supported
+    window.location.href = "tel:+2540111231789";
+};
+//contactform message display
+document.getElementById('contact-form').onsubmit = function(e) {
+    e.preventDefault();
+    document.getElementById('message-status').style.display = 'block';
+    document.getElementById('message-status').textContent = "Thank you! Your message has been sent.";
+    this.reset();
+};
+
+// Dynamic youth chess activities data
+const programs = [
+    {
+        icon: "fas fa-graduation-cap",
+        title: "Youth Chess Clubs",
+        desc: "Weekly sessions for kids to learn and compete."
+    },
+    {
+        icon: "fas fa-trophy",
+        title: "Tournaments",
+        desc: "Local & national chess competitions."
+    },
+    {
+        icon: "fas fa-chalkboard-teacher",
+        title: "Teacher Training",
+        desc: "Workshops for educators to integrate chess in schools."
+    },
+    {
+        icon: "fas fa-puzzle-piece",
+        title: "Chess Puzzles & Challenges",
+        desc: "Interactive puzzle sessions to boost problem-solving skills."
+    },
+    {
+        icon: "fas fa-users",
+        title: "Team Matches",
+        desc: "Group competitions to encourage teamwork and strategy."
+    },
+    {
+        icon: "fas fa-laptop",
+        title: "Online Chess Camps",
+        desc: "Virtual chess camps with live coaching and games."
+    },
+    {
+        icon: "fas fa-lightbulb",
+        title: "Mentorship Program",
+        desc: "Pairing young players with experienced mentors for growth."
+    },
+    {
+        icon: "fas fa-book",
+        title: "Chess & Life Skills Workshops",
+        desc: "Sessions combining chess learning with leadership and critical thinking."
+    }
+];
+
+// Render programs dynamically
+const container = document.getElementById('programs-container');
+programs.forEach(program => {
+    const card = document.createElement('div');
+    card.className = 'program-card';
+    card.innerHTML = `
+        <i class="${program.icon}"></i>
+        <h3>${program.title}</h3>
+        <p>${program.desc}</p>
+    `;
+    container.appendChild(card);
+});
