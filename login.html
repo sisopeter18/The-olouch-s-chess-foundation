@@ -1,24 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Olouch Chess Foundation</title>
+    <title>The Olouch's Chess Foundation</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-
 <body>
     <!-- Top left fixed Login button -->
     <div style="position:fixed; top:20px; left:20px; z-index:1000;">
         <button id="login-btn" class="btn">Login</button>
     </div>
     <!-- Login Modal (shows immediately when Login button is clicked) -->
-    <div id="account-login-modal"
-        style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.5); align-items:center; justify-content:center;">
-        <form id="account-login-form"
-            style="background:#fff; padding:20px; border-radius:8px; max-width:400px; margin:auto;">
+    <div id="account-login-modal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.5); align-items:center; justify-content:center;">
+        <form id="account-login-form" style="background:#fff; padding:20px; border-radius:8px; max-width:400px; margin:auto;">
             <h3>Login</h3>
             <input type="text" name="username" placeholder="Username" required><br>
             <input type="password" name="password" placeholder="Password" required><br>
@@ -27,62 +23,60 @@
         </form>
     </div>
     <script>
-        // Retrieve users from localStorage if available
-        let users = [];
-        if (localStorage.getItem('users')) {
-            users = JSON.parse(localStorage.getItem('users'));
-        } else {
-            // Demo user for first time
-            users = [
-                {
-                    fullname: "John Doe",
-                    idnumber: "12345678",
-                    username: "johndoe",
-                    email: "john@example.com",
-                    password: "password",
-                    dob: "2000-01-01",
-                    gender: "Male",
-                    level: "Tertiary",
-                    phone: "0712345678"
-                }
-            ];
-            localStorage.setItem('users', JSON.stringify(users));
-        }
-        let currentUser = null;
-
-        // Show login modal immediately when page loads
-        window.onload = function () {
-            document.getElementById('account-login-modal').style.display = "flex";
-        };
-
-        // Also allow login button to show modal (if user closes it)
-        document.getElementById('login-btn').onclick = function () {
-            document.getElementById('account-login-modal').style.display = "flex";
-        };
-        document.getElementById('close-login-modal').onclick = function () {
-            document.getElementById('account-login-modal').style.display = "none";
-            document.getElementById('account-login-form').reset();
-        };
-        // Handle login
-        document.getElementById('account-login-form').onsubmit = function (e) {
-            e.preventDefault();
-            users = localStorage.getItem('users') ? JSON.parse(localStorage.getItem('users')) : users;
-            const form = e.target;
-            const username = form.username.value;
-            const password = form.password.value;
-            const user = users.find(u => u.username === username && u.password === password);
-            if (user) {
-                currentUser = user;
-                alert(`Welcome back, ${user.fullname}!`);
-                document.getElementById('account-login-modal').style.display = "none";
-                form.reset();
-                window.location.href = "index.html";
-            } else {
-                alert("Invalid username or password.");
+    // Retrieve users from localStorage if available
+    let users = [];
+    if (localStorage.getItem('users')) {
+        users = JSON.parse(localStorage.getItem('users'));
+    } else {
+        // Demo user for first time
+        users = [
+            {
+                fullname: "John Doe",
+                idnumber: "12345678",
+                username: "johndoe",
+                email: "john@example.com",
+                password: "password",
+                dob: "2000-01-01",
+                gender: "Male",
+                level: "Tertiary",
+                phone: "0712345678"
             }
-        };
+        ];
+        localStorage.setItem('users', JSON.stringify(users));
+    }
+    let currentUser = null;
+
+    // Show login modal immediately when page loads
+    window.onload = function() {
+        document.getElementById('account-login-modal').style.display = "flex";
+    };
+
+    // Also allow login button to show modal (if user closes it)
+    document.getElementById('login-btn').onclick = function() {
+        document.getElementById('account-login-modal').style.display = "flex";
+    };
+    document.getElementById('close-login-modal').onclick = function() {
+        document.getElementById('account-login-modal').style.display = "none";
+        document.getElementById('account-login-form').reset();
+    };
+    // Handle login
+    document.getElementById('account-login-form').onsubmit = function(e) {
+        e.preventDefault();
+        users = localStorage.getItem('users') ? JSON.parse(localStorage.getItem('users')) : users;
+        const form = e.target;
+        const username = form.username.value;
+        const password = form.password.value;
+        const user = users.find(u => u.username === username && u.password === password);
+        if (user) {
+            currentUser = user;
+            alert(`Welcome back, ${user.fullname}!`);
+            document.getElementById('account-login-modal').style.display = "none";
+            form.reset();
+            window.location.href = "index.html";
+        } else {
+            alert("Invalid username or password.");
+        }
+    };
     </script>
 </body>
-
-
 </html>

@@ -1,108 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Olouch Chess Foundation</title>
+    <title>The Olouch's Chess Foundation</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-
 <body>
-    <header>
-        <!-- responsive navbar -->
-        <div class="nav-bar-placeholder"></div>
-    </header>
-    <!-- Donate Section -->
+     <!-- Donate Section -->
     <section id="donate" class="donate">
         <h2>Support Our Mission</h2>
         <div class="donate-content">
-            <button onclick="window.location.href='index.html'" class="btn" style="margin-bottom:20px;">Back to
-                Home</button>
+            <button onclick="window.location.href='index.html'" class="btn" style="margin-bottom:20px;">Back to Home</button>
             <p>Your donation helps us provide free chess education to underserved communities.</p>
             <form id="donation-form">
                 <!-- ...existing code... -->
-                <form id="donation-form">
-                    <input type="number" placeholder="Amount" required>
-                    <select name="currency" required>
-                        <option value="" disabled selected>Select Currency</option>
-                        <!-- North America -->
-                        <option value="USD">USD - US Dollar</option>
-                        <option value="CAD">CAD - Canadian Dollar</option>
-                        <option value="MXN">MXN - Mexican Peso</option>
-                        <!-- Europe -->
-                        <option value="EUR">EUR - Euro</option>
-                        <option value="GBP">GBP - British Pound</option>
-                        <option value="CHF">CHF - Swiss Franc</option>
-                        <!-- Africa -->
-                        <option value="NGN">NGN - Nigerian Naira</option>
-                        <option value="ZAR">ZAR - South African Rand</option>
-                        <option value="EGP">EGP - Egyptian Pound</option>
-                        <option value="KES">KES - Kenyan Shilling</option>
-                        <option value="GHS">GHS - Ghanaian Cedi</option>
-                        <option value="TZS">TZS - Tanzanian Shilling</option>
-                        <option value="MAD">MAD - Moroccan Dirham</option>
-                        <option value="XOF">XOF - West African CFA Franc</option>
-                        <option value="XAF">XAF - Central African CFA Franc</option>
-                        <!-- Asia -->
-                        <option value="JPY">JPY - Japanese Yen</option>
-                        <option value="CNY">CNY - Chinese Yuan</option>
-                        <option value="INR">INR - Indian Rupee</option>
-                        <!-- Oceania -->
-                        <option value="AUD">AUD - Australian Dollar</option>
-                        <option value="NZD">NZD - New Zealand Dollar</option>
-                        <!-- South America -->
-                        <option value="BRL">BRL - Brazilian Real</option>
-                        <option value="ARS">ARS - Argentine Peso</option>
-                        <option value="CLP">CLP - Chilean Peso</option>
-                    </select>
-                    <button type="submit" class="btn">Donate Now</button>
-                </form>
-                <!-- Additional Donation Methods -->
+<form id="donation-form">
+    <input type="number" placeholder="Amount" required>
+    <select name="currency" required>
+        <option value="" disabled selected>Select Currency</option>
+        <!-- North America -->
+        <option value="USD">USD - US Dollar</option>
+        <option value="CAD">CAD - Canadian Dollar</option>
+        <option value="MXN">MXN - Mexican Peso</option>
+        <!-- Europe -->
+        <option value="EUR">EUR - Euro</option>
+        <option value="GBP">GBP - British Pound</option>
+        <option value="CHF">CHF - Swiss Franc</option>
+        <!-- Africa -->
+        <option value="NGN">NGN - Nigerian Naira</option>
+        <option value="ZAR">ZAR - South African Rand</option>
+        <option value="EGP">EGP - Egyptian Pound</option>
+        <option value="KES">KES - Kenyan Shilling</option>
+        <option value="GHS">GHS - Ghanaian Cedi</option>
+        <option value="TZS">TZS - Tanzanian Shilling</option>
+        <option value="MAD">MAD - Moroccan Dirham</option>
+        <option value="XOF">XOF - West African CFA Franc</option>
+        <option value="XAF">XAF - Central African CFA Franc</option>
+        <!-- Asia -->
+        <option value="JPY">JPY - Japanese Yen</option>
+        <option value="CNY">CNY - Chinese Yuan</option>
+        <option value="INR">INR - Indian Rupee</option>
+        <!-- Oceania -->
+        <option value="AUD">AUD - Australian Dollar</option>
+        <option value="NZD">NZD - New Zealand Dollar</option>
+        <!-- South America -->
+        <option value="BRL">BRL - Brazilian Real</option>
+        <option value="ARS">ARS - Argentine Peso</option>
+        <option value="CLP">CLP - Chilean Peso</option>
+    </select>
+    <button type="submit" class="btn">Donate Now</button>
+</form>
+<!-- Additional Donation Methods -->
 
-                <div class="donation-methods">
-                    <h3>Other Ways to Donate</h3>
-                    <ul>
-                        <li>
-                            <strong>Mpesa (Kenya):</strong>
-                            Paybill: <span>123456</span>, Account: <span>The Olouch Chess Foundation</span>
-                            <br>
-                            <button id="mpesa-pay-btn" type="button" class="btn">Donate via Mpesa Online</button>
-                        </li>
-                        <!-- ...other methods... -->
-                    </ul>
-                </div>
+<div class="donation-methods">
+    <h3>Other Ways to Donate</h3>
+    <ul>
+        <li>
+            <strong>Mpesa (Kenya):</strong> 
+            Paybill: <span>123456</span>, Account: <span>MindMoveChess</span>
+            <br>
+            <button id="mpesa-pay-btn" type="button" class="btn">Donate via Mpesa Online</button>
+        </li>
+        <!-- ...other methods... -->
+    </ul>
+</div>
 
-                <!-- ...existing code... -->
-                <li>
-                    <strong>Bank Transfer:</strong>
-                    <ul>
-                        <li>NCBA (KENYA): Account No. 000123456789, NAIROBI: KENYATTA AVENUE</li>
-                        <li>Barclays (KENYA): Account No. 12345678, Sort Code: 20-00-00</li>
-                        <li>Ecobank (KENYA): Account No. 1234567890</li>
-                    </ul>
-                </li>
-                <li>
-                    <strong>PayPal:</strong>
-                    <a href="https://paypal.me/The Olouch Chess Foundation" target="_blank">paypal.me/The Olouch Chess Foundation</a>
-                </li>
-                <li>
-                    <strong>Western Union:</strong>
-                    Name: The Olouch Chess Foundation, Country: Kenya
-                </li>
-                </ul>
-        </div>
-        <!-- ...existing code... -->
-        <div class="thank-you-message" id="thank-you-message" style="display: none;">
-            <h3>Thank You for Your Support!</h3>
-            <p>Your donation will help us make a difference in the lives of many.</p>
-            <!-- Thank You Message -->
+<!-- ...existing code... -->
+        <li>
+            <strong>Bank Transfer:</strong>
+            <ul>
+                <li>NCBA (KENYA): Account No. 000123456789, NAIROBI: KENYATTA AVENUE</li>
+                <li>Barclays (KENYA): Account No. 12345678, Sort Code: 20-00-00</li>
+                <li>Ecobank (KENYA): Account No. 1234567890</li>
+            </ul>
+        </li>
+        <li>
+            <strong>PayPal:</strong> 
+            <a href="https://paypal.me/mindmovechess" target="_blank">paypal.me/mindmovechess</a>
+        </li>
+        <li>
+            <strong>Western Union:</strong> 
+            Name: Mind & Move Chess Foundation, Country: Kenya
+        </li>
+    </ul>
+</div>
+<!-- ...existing code... -->
+            <div class="thank-you-message" id="thank-you-message" style="display: none;">
+                <h3>Thank You for Your Support!</h3>
+                <p>Your donation will help us make a difference in the lives of many.</p>
+<!-- Thank You Message -->
             </form>
         </div>
     </section>
-    <script src="script.js"></script>
 </body>
-
-
 </html>
