@@ -13,6 +13,7 @@ if (!$phone || !$amount) {
 $env = parse_ini_file(__DIR__ . '/.env');
 if (!$env) {
     respond(['status' => 'error', 'message' => 'Environment variables missing']);
+    exit();
 }
 
 $shortCode = $env['M-Pesa_ShortCode'] ?? '';
@@ -82,6 +83,7 @@ function respond($data) {
 function getAccessToken($consumerKey, $consumerSecret) {
     $credentials = base64_encode("$consumerKey:$consumerSecret");
 
+        global $env;
     $Mpesa_Env = $env['M-Pesa_Environment'] ?? 'Sandbox';
     if (strtolower($Mpesa_Env) === 'production') {
         $tokenUrl = 'https://api.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials'; // for production
@@ -99,6 +101,8 @@ function getAccessToken($consumerKey, $consumerSecret) {
 }
 
 function sendStkPush($payload, $access_token) {
+        global $env;
+    $Mpesa_Env = $env['M-Pesa_Environment'] ?? 'Sandbox';
     if (strtolower($Mpesa_Env) === 'production') {
         $stkUrl = 'https://api.safaricom.co.ke/mpesa/stkpush/v1/processrequest';
     } else {
@@ -119,6 +123,7 @@ function sendStkPush($payload, $access_token) {
 }
 
 function storeTransaction($merchantRequestID, $checkoutRequestID, $phone, $amount, $accountReference) {
+        global $env;
     $db_host = $env['Db_Host'];
     $db_username = $env['Db_User'];
     $db_password = $env['Db_Password'];

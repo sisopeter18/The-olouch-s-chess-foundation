@@ -94,8 +94,16 @@ donateForm.addEventListener('submit', (e) => {
             }
         },
         error: function (xhr) {
-            // handle error
-            alert(xhr.status + ': ' + xhr.statusText);
+            // Try to parse and show server error message if available
+            let msg = xhr.status + ': ' + xhr.statusText;
+            try {
+                let json = JSON.parse(xhr.responseText);
+                if (json.message) msg = json.message;
+            } catch (e) {
+                // responseText is not valid JSON, show raw text
+                if (xhr.responseText) msg += '\n' + xhr.responseText;
+            }
+            alert(msg);
             console.log(xhr.responseText);
         },
         complete: function () {

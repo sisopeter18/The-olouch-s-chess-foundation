@@ -26,6 +26,13 @@ if (!$data || !isset($data['Body']['stkCallback'])) {
 
 $stkCallback = $data['Body']['stkCallback'];
 
+// get database variables from .env file
+$db_variables = parse_ini_file(__DIR__ . '/.env');
+$db_host = $db_variables['Db_Host'];
+$db_username = $db_variables['Db_User'];
+$db_password = $db_variables['Db_Password'];
+$db_name = $db_variables['Db_Name'];
+
 // Extract required fields from the callback data
 $MerchantRequestID = $stkCallback['MerchantRequestID'] ?? null;
 $CheckoutRequestId = $stkCallback['CheckoutRequestID'] ?? null;
@@ -60,9 +67,9 @@ foreach($CallbackMetadata as $Item) {
 
 // Get Status from $ResultCode
 $status = ($ResultCode == 0) ? 'Success' : 'Failed';
-$env_variables = parse_ini_file(__DIR__ . '/.env');
+
 // connect to database
-$conn = mysqli_connect($env_variables['Db_Host'], $env_variables['Db_User'], $env_variables['Db_Password'], $env_variables['Db_Name']);
+$conn = mysqli_connect($db_host, $db_username, $db_password, $db_name);
 if ($conn->connect_error) {
     file_put_contents('logs/db_connect_error.log', 'Failed to connect to database: ' . $conn->connect_error . PHP_EOL, FILE_APPEND);
     exit;
