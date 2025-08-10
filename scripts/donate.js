@@ -77,7 +77,7 @@ donateForm.addEventListener('submit', (e) => {
     // send data to the server using AJAX
     $.ajax({
         type: 'POST',
-        url: 'donate.php',
+        url: 'server/donate.php',
         data: donationData,
         processData: false,
         contentType: false,
