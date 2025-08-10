@@ -60,15 +60,15 @@ foreach($CallbackMetadata as $Item) {
 
 // Get Status from $ResultCode
 $status = ($ResultCode == 0) ? 'Success' : 'Failed';
-
+$env_variables = parse_ini_file(__DIR__ . '/.env');
 // connect to database
-$conn = mysqli_connect('db_host', 'db_username', 'db_password', 'db_name');
+$conn = mysqli_connect($env_variables['Db_Host'], $env_variables['Db_User'], $env_variables['Db_Password'], $env_variables['Db_Name']);
 if ($conn->connect_error) {
     file_put_contents('logs/db_connect_error.log', 'Failed to connect to database: ' . $conn->connect_error . PHP_EOL, FILE_APPEND);
     exit;
 }
 
-$stmt = $conn->prepare("UPDATE stk_transactions SET
+$stmt = $conn->prepare("UPDATE transactions SET
     result_code = ?,
     result_desc = ?,
     mpesa_receipt_number = ?,
