@@ -136,16 +136,24 @@ const translations = {
 function setLanguage(lang) {
     const t = translations[lang] || translations.en;
     // Update hero section
-    document.querySelector('.hero-content h2').textContent = t.heroTitle;
-    document.querySelector('.hero-content p').textContent = t.heroText;
-    document.querySelector('.hero-content .btn').textContent = t.donate;
+    const heroTitleEl = document.querySelector('.hero-content h2');
+    if (heroTitleEl) heroTitleEl.textContent = t.heroTitle;
+    const heroTextEl = document.querySelector('.hero-content p');
+    if (heroTextEl) heroTextEl.textContent = t.heroText;
+    const donateBtnEl = document.querySelector('.hero-content .btn');
+    if (donateBtnEl) donateBtnEl.textContent = t.donate;
     // Update events section
-    document.querySelector('#events h2').textContent = t.events;
+    const eventsTitleEl = document.querySelector('#events h2');
+    if (eventsTitleEl) eventsTitleEl.textContent = t.events;
     // Update puzzle section
-    document.querySelector('.puzzle h2').textContent = t.puzzle;
-    document.querySelector('.puzzle p').textContent = t.puzzleText;
-    document.getElementById('hint-btn').textContent = t.hint;
-    document.getElementById('solution-btn').textContent = t.solution;
+    const puzzleTitleEl = document.querySelector('.puzzle h2');
+    if (puzzleTitleEl) puzzleTitleEl.textContent = t.puzzle;
+    const puzzleTextEl = document.querySelector('.puzzle p');
+    if (puzzleTextEl) puzzleTextEl.textContent = t.puzzleText;
+    const hintBtnEl = document.getElementById('hint-btn');
+    if (hintBtnEl) hintBtnEl.textContent = t.hint;
+    const solutionBtnEl = document.getElementById('solution-btn');
+    if (solutionBtnEl) solutionBtnEl.textContent = t.solution;
 }
 
 document.getElementById('language-select').addEventListener('change', function () {
@@ -157,15 +165,22 @@ window.onload = function () {
     setLanguage(document.getElementById('language-select').value);
 };
 
+
 const slides = document.querySelectorAll('.hero-bg-slide');
 let current = 0;
-setInterval(() => {
-    slides[current].classList.remove('active');
-    slides[current].classList.add('prev');
-    current = (current + 1) % slides.length;
-    slides[current].classList.add('active');
-    slides[current].classList.remove('prev');
-}, 4000);
+if (slides.length > 0) {
+    setInterval(() => {
+        if (slides[current]) {
+            slides[current].classList.remove('active');
+            slides[current].classList.add('prev');
+        }
+        current = (current + 1) % slides.length;
+        if (slides[current]) {
+            slides[current].classList.add('active');
+            slides[current].classList.remove('prev');
+        }
+    }, 4000);
+}
 
 
 document.addEventListener('DOMContentLoaded', () => {
