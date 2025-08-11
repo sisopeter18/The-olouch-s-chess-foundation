@@ -3,7 +3,7 @@ export const navBarContent = `
             <!-- logo -->
             <div class="nav-logo" onclick="window.location.href = 'index.html'">
                 <img src="images/chesslogo.png" alt="Logo">
-                <p>The Olouch's Chess Foundation</p>
+                <p>The Olouch Chess Foundation</p>
             </div>
 
             <!-- Hamburger Menu Button -->
