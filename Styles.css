@@ -427,7 +427,9 @@ footer {
     font-size: 1.5rem;
 }
 
-
+.hidden {
+    display: none;
+}
 /* Keyframes for gradient animation */
 @keyframes gradientSlide {
     0% {
@@ -707,5 +709,53 @@ footer {
 }
 
 .back-to-home:hover {
+    background-color: #1a202c;
+}
+/* sign-up page */
+.account-signup-modal {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    justify-items: center;
+    background: rgba(38, 38, 35, 0.53);
+}
+#account-signup-form {
+    position: relative;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+    width: 400px;
+    gap: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background: #ffffff;
+}
+#account-signup-form select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+#account-signup-form label {
+    font-weight: bold;
+}
+#account-signup-form input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+#account-signup-form button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background-color: #2c3e50;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+#account-signup-form button:hover {
     background-color: #1a202c;
 }
