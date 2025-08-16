@@ -634,6 +634,7 @@ footer {
 }
 
 .login-page-title {
+    margin-top: 10px;
     text-align: center;
     color: #2c3e50;
     background: white;
@@ -711,6 +712,14 @@ footer {
 .back-to-home:hover {
     background-color: #1a202c;
 }
+#account-login-form a {
+    text-decoration: none;
+    color: #2c3e50;
+    margin-top: 10px;
+}
+#account-login-form a:hover {
+    color: #2c3e50;
+}
 /* sign-up page */
 .account-signup-modal {
     width: 100%;
@@ -758,4 +767,12 @@ footer {
 }
 #account-signup-form button:hover {
     background-color: #1a202c;
+}
+#account-signup-form a {
+    text-decoration: none;
+    color: #2c3e50;
+    margin-top: 10px;
+}
+#account-signup-form a:hover {
+    color: #2c3e50;
 }

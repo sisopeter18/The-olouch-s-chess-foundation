@@ -7,73 +7,15 @@
     <title>Our Programs</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="shortcut icon" type="image/x-icon" href="images/chesslogo.png">
 </head>
 
 <body>
-    <!-- Header & Navigation -->
     <header>
         <div class="navbar-placeholder"></div>
     </header>
-    <main>
-        <div class="logo">
-            <h1><span class="The Olouch Chess Foundation"></span>The Olouch Chess Foundation</h1>
-        </div>
-        <!-- Programs Section -->
-        <section id="programs" class="programs">
-            <h2>Our Programs</h2>
-            <div class="programs-container" id="programs-container">
-                <!-- Program cards will be injected here dynamically -->
-            </div>
-            <div class="events-section">
-                <h3>Upcoming Events</h3>
-                <ul id="events-list"></ul>
-                <button id="add-event-btn" class="btn" style="display:none;">Add Upcoming Event</button>
-                <div id="admin-participants" style="display:none; margin-top:20px;">
-                    <h4>Participants List</h4>
-                    <div id="participants-data"></div>
-                    <button id="download-participants-btn" class="btn" style="margin-top:10px;">Download List</button>
-                    <h4 style="margin-top:20px;">Upload Document for Participants</h4>
-                    <input type="file" id="admin-upload" style="margin-bottom:10px;">
-                    <button id="upload-btn" class="btn">Upload</button>
-                    <div id="uploaded-docs"></div>
-                </div>
-                <div id="participant-docs" style="display:none; margin-top:20px;">
-                    <h4>Documents from Admin</h4>
-                    <div id="docs-list"></div>
-                </div>
-            </div>
 
-            <!-- Participant Signup Modal -->
-            <div id="signup-modal"
-                style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.5); align-items:center; justify-content:center;">
-                <form id="signup-form"
-                    style="background:#fff; padding:20px; border-radius:8px; max-width:400px; margin:auto;">
-                    <h3>Sign Up for Event</h3>
-                    <input type="text" name="name" placeholder="Full Name" required><br>
-                    <select name="gender" required>
-                        <option value="" disabled selected>Gender</option>
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
-                        <option value="Other">Other</option>
-                    </select><br>
-                    <input type="date" name="dob" placeholder="Date of Birth" required><br>
-                    <input type="number" name="age" placeholder="Age" min="1" required><br>
-                    <select name="level" required>
-                        <option value="" disabled selected>School Level / Adult</option>
-                        <option value="Primary">Primary Level Student</option>
-                        <option value="Secondary">Secondary Level Student</option>
-                        <option value="Tertiary">Tertiary Level Student</option>
-                        <option value="Adult">Adult (Not a Student)</option>
-                    </select><br>
-                    <button type="submit" class="btn">Submit</button>
-                    <button type="button" class="btn" id="close-signup" style="margin-left:10px;">Cancel</button>
-                </form>
-            </div>
-        </section>
-        <script type="module" src="scripts/script.js"></script>
-        <script type="module" src="scripts/programs.js"></script>
+    <script type="module" src="scripts/programs.js"></script>
 </body>
 
-
 </html>
-

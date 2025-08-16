@@ -1,7 +1,7 @@
 export const navBarContent = `
         <nav class="navbar">
             <!-- logo -->
-            <div class="nav-logo" onclick="window.location.href = 'index.html'">
+            <div class="nav-logo" onclick="window.location.href = 'index.php'">
                 <img src="images/chesslogo.png" alt="Logo">
                 <p>The Olouch Chess Foundation</p>
             </div>
@@ -26,7 +26,7 @@ export const navBarContent = `
                 <!-- Auth buttons -->
                 <div class="auth-buttons">
                     <a href="signup.html" class="btn">Sign Up</a>
-                    <a href="login.html" class="btn">Login</a>
+                    <a href="server/login.php" class="btn">Login</a>
                 </div>
                 <div class="language-selector">
                     <select id="language-select" class="btn">

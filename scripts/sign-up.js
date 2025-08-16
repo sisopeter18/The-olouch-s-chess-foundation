@@ -32,8 +32,7 @@ document.querySelector('.form-placeholder').innerHTML = `
             <input type="tel" name="phone" placeholder="Phone Number" required>
             <button type="submit" class="btn">Sign Up</button>
             <button type="button" class="btn" id="close-signup-modal" onclick="closeSignupModal()">Cancel</button>
-            <button type="button" class="goto-login-btn" onclick="window.location.href='login.html'">Go to
-                Login</button>
+            <a href="server/login.php">Go to Login</a>
         </form>
 `;
 
@@ -94,6 +93,29 @@ signupForm.addEventListener('submit', (event) => {
         phone,
         school: levelSelect.value !== 'not-student' ? school : ''
     };
-    console.log(signupData);
-    // submit to server for processing
+
+    $.ajax({
+        url: 'server/sign-up.php',
+        type: 'POST',
+        data: signupData,
+        processData: false,
+        contentType: false,
+        dataType: 'json',
+        // beforeSend: () => { 
+
+        // },
+        success: (response) => {
+            if (response.success) {
+                alert(response.message);
+            } else {
+                alert(response.message);
+            }
+        },
+        error: (error) => {
+            alert('An error occurred while signing up.');
+        },
+        complete: () => {
+            signupForm.reset();
+        }
+    });
 });
