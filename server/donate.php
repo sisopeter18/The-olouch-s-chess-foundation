@@ -65,7 +65,7 @@ if (isset($response['ResponseCode']) && $response['ResponseCode'] === '0') {
         'checkoutRequestID' => $checkoutRequestID
     ]);
 } else {
-    logError("logs/stkpush_errors.log", json_encode($response));
+    logError("../logs/stkpush_errors.log", json_encode($response));
     respond([
         'status' => 'error',
         'message' => 'An error occurred. Please try again.',
@@ -133,7 +133,7 @@ function storeTransaction($merchantRequestID, $checkoutRequestID, $phone, $amoun
     }
     $conn = new mysqli($db_host, $db_username, $db_password, $db_name);
     if ($conn->connect_error) {
-        logError("logs/db_error.log", $conn->connect_error);
+        logError("../logs/db_error.log", $conn->connect_error);
         return false;
     }
     $stmt = $conn->prepare("INSERT INTO transactions 
@@ -143,7 +143,7 @@ function storeTransaction($merchantRequestID, $checkoutRequestID, $phone, $amoun
     $stmt->bind_param("ssssss", $merchantRequestID, $checkoutRequestID, $phone, $amount, $accountReference, $status);
     $result = $stmt->execute();
     if (!$result) {
-        logError("logs/db_insert_error.log", $stmt->error);
+        logError("../logs/db_insert_error.log", $stmt->error);
     }
     $stmt->close();
     $conn->close();

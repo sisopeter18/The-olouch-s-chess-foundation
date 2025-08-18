@@ -192,9 +192,19 @@ document.addEventListener('DOMContentLoaded', () => {
         navMenu.classList.toggle('active');
     });
 
-    // Close menu when a link is clicked (useful for single-page apps or when navigating)
+    // Close menu when a nav link is clicked
     const navLinks = document.querySelectorAll('.nav-links a');
     navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            if (navMenu.classList.contains('active')) {
+                navMenu.classList.remove('active');
+            }
+        });
+    });
+
+    // Close menu when an auth link is clicked
+    const authLinks = document.querySelectorAll('.auth-buttons a');
+    authLinks.forEach(link => {
         link.addEventListener('click', () => {
             if (navMenu.classList.contains('active')) {
                 navMenu.classList.remove('active');

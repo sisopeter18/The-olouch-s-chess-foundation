@@ -776,3 +776,14 @@ footer {
 #account-signup-form a:hover {
     color: #2c3e50;
 }
+
+.terms-container {
+    position: relative;
+    display: grid;
+    grid-template-columns: 20% 70%;
+    gap: 1%;
+    margin-top: 20px;
+}
+.terms-container label a{
+    font: 10px;
+}

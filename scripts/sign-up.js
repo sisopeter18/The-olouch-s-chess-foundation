@@ -4,8 +4,8 @@ document.querySelector('.form-placeholder').innerHTML = `
             <h3>Create Account</h3>
             <label for="fullname">Name:</label>
             <input type="text" name="fullname" placeholder="Full Name" required>
-            <label for="username">Username:</label>
-            <input type="text" name="username" placeholder="Username" required>
+            <label for="username">username:</label>
+            <input type="text" name="username" placeholder="username" required>
             <label for="email">Email:</label>
             <input type="email" name="email" placeholder="Email" required>
             <label for="password">Password:</label>
@@ -30,12 +30,18 @@ document.querySelector('.form-placeholder').innerHTML = `
             <input type="text" name="school" id="school-input" class="hidden" placeholder="School Name (if student)">
             <label for="phone">Phone Number:</label>
             <input type="tel" name="phone" placeholder="Phone Number" required>
+            <div class="terms-container">
+            <input type="checkbox" name="terms" required>
+            <label for="terms">I accept the <a href="terms.html">Terms and Conditions</a></label>
+            </div>
             <button type="submit" class="btn">Sign Up</button>
             <button type="button" class="btn" id="close-signup-modal" onclick="closeSignupModal()">Cancel</button>
             <a href="server/login.php">Go to Login</a>
         </form>
 `;
-
+function closeSignupModal() {
+    window.location.href = 'index.php';
+}
 const signupForm = document.querySelector('#account-signup-form');
 
 const levelSelect = signupForm.level;
@@ -56,7 +62,7 @@ signupForm.addEventListener('submit', (event) => {
 
     // Read values at submit time
     const fullName = signupForm.fullname.value.trim();
-    const userName = signupForm.username.value.trim();
+    const username = signupForm.username.value.trim();
     const email = signupForm.email.value.trim();
     const password = signupForm.password.value.trim();
     const confirmPassword = signupForm.confirmpassword.value.trim();
@@ -66,13 +72,9 @@ signupForm.addEventListener('submit', (event) => {
     const schoolInput = signupForm.school;
     const school = schoolInput.value.trim();
     const phone = signupForm.phone.value.trim();
+    const terms = signupForm.terms.checked;
 
     if (levelSelect.value !== 'not-student' && !school) {
-        alert('Please fill in all required fields.');
-        return;
-    }
-
-    if (!fullName || !userName || !email || !password || !confirmPassword || !dob || !gender || !phone) {
         alert('Please fill in all required fields.');
         return;
     }
@@ -82,24 +84,31 @@ signupForm.addEventListener('submit', (event) => {
         return;
     }
 
-    signupData = {
-        fullName,
-        userName,
-        email,
-        password,
-        confirmPassword,
-        dob,
-        gender,
-        phone,
-        school: levelSelect.value !== 'not-student' ? school : ''
-    };
+    if (!terms) {
+        alert("Please agree to our terms and conditions.");
+        return;
+    }
 
+    signupData = {
+        fullname: fullName,
+        username: username,
+        email: email,
+        password: password,
+        confirmPassword: confirmPassword,
+        dob: dob,
+        gender: gender,
+        phone: phone,
+        school: levelSelect.value !== 'not-student' ? school : 'Not a Student',
+        accepted_terms: terms
+    }
+
+    console.log(signupData);
     $.ajax({
         url: 'server/sign-up.php',
         type: 'POST',
         data: signupData,
-        processData: false,
-        contentType: false,
+        // processData: false,
+        // contentType: false,
         dataType: 'json',
         // beforeSend: () => { 
 
@@ -107,12 +116,14 @@ signupForm.addEventListener('submit', (event) => {
         success: (response) => {
             if (response.success) {
                 alert(response.message);
+                window.location.href = 'server/login.php';
             } else {
                 alert(response.message);
             }
         },
         error: (error) => {
-            alert('An error occurred while signing up.');
+            // alert('An error occurred while signing up.');
+            console.error(error);
         },
         complete: () => {
             signupForm.reset();

@@ -1,2 +1,2 @@
-import { navBarContent } from "/scripts/scripts.js";
+import { navBarContent } from './scripts.js';
 document.querySelector('.navbar-placeholder').innerHTML = navBarContent;

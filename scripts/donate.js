@@ -107,6 +107,7 @@ donateForm.addEventListener('submit', (e) => {
             console.log(xhr.responseText);
         },
         complete: function () {
+            donateForm.reset();
             hideLoader();
         }
     });
