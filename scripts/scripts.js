@@ -19,7 +19,7 @@ export const navBarContent = `
                         <li><a href="index.html">Home</a></li>
                         <li><a href="about.html">About</a></li>
                         <li><a href="contact.html">Contact</a></li>
-                        <li><a href="programs.html">Programs</a></li>
+                        <li><a href="chess_game/StGameArea.html">Play</a></li>
                         <li><a href="donate.html">Donate</a></li>
                     </ul>
                 </div>

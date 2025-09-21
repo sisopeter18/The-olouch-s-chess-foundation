@@ -787,3 +787,22 @@ footer {
 .terms-container label a{
     font: 10px;
 }
+
+.programs {
+    display: grid;
+    grid-template-columns: 45% 45%;
+    gap: 3%;
+    margin-top: 20px;
+}
+.programs .program {
+    overflow: hidden;
+    outline: 1px solid #2c3e50;
+    box-shadow: 1px 0.5px 2px 0.5px;
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 5px;
+}
+.programs .program .program-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
