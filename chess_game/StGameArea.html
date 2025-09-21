@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta http-equiv="Cross-Origin-Opener-Policy" content="same-origin">
   <meta http-equiv="Cross-Origin-Embedder-Policy" content="require-corp">
@@ -8,573 +9,677 @@
   <title>Chessem – Dark Theme with AI Analysis</title>
   <meta name="author" content="Abednego Nasila">
   <script src="./ANTICHEAT.js"></script>
-  
-<link rel="stylesheet" href="./styles/chessboard-1.0.0.min.css">
-  
+
+  <link rel="stylesheet" href="./styles/chessboard-1.0.0.min.css">
+
   <!-- Note: For a real application, download chessboard-1.0.0.min.css and host it locally. -->
 
-<style>
-/* === Base Reset & Dark Theme === */
-html, body {
-  margin: 0;
-  padding: 0;
-  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  background-color: #121212;
-  color: #e0e0e0;
-  height: 100%;
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+  <style>
+    /* === Base Reset & Dark Theme === */
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      background-color: #121212;
+      color: #e0e0e0;
+      height: 100%;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 
 
-bodyy {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    background: linear-gradient(135deg, #0f0f23, #1a1a2e);
-    color: #e0e0e0;
-    height: 100%;
-    overflow-x: hidden;
-}
+    bodyy {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #0f0f23, #1a1a2e);
+      color: #e0e0e0;
+      height: 100%;
+      overflow-x: hidden;
+    }
 
 
-/* === Wrapper Grid System === */
-.wrapper {
-  box-sizing: border-box;
-  width: 100vw;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 0px;
-  padding: 0px;
-  margin: 0px;
-}
+    /* === Wrapper Grid System === */
+    .wrapper {
+      box-sizing: border-box;
+      width: 100vw;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 0px;
+      padding: 0px;
+      margin: 0px;
+    }
 
-/* === Common Card Styles === */
-.wrapper > div,
-.wrapper > .control-bar-container {
-  padding: 0px;
-  box-sizing: border-box;
-}
+    /* === Common Card Styles === */
+    .wrapper>div,
+    .wrapper>.control-bar-container {
+      padding: 0px;
+      box-sizing: border-box;
+    }
 
-/* === Specialized Components === */
-.playing-status {
-  font-weight: 600;
-  color: #03a9f4;
-}
+    /* === Specialized Components === */
+    .playing-status {
+      font-weight: 600;
+      color: #03a9f4;
+    }
 
-.playing-status table {
-  width: 100%;
-}
-
-.playing-status .back svg, #settingsBtn svg {
-  fill: #e0e0e0;
-  transition: fill 0.2s;
-}
-.playing-status .back:hover svg {
-  fill: #ffffff;
-}
-
-.movehist {
-  overflow-y: auto;
-  color: #c0c0c0;
-}
-
-.movehist .hist {
-  width: 100%;
-}
-
-.board-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding: 0px;
-  border: none !important;
-}
-
-#board {
-  margin: 0px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  place-items: center;
-  text-align: center;
-  width: 100px;
-  font-size: 0.75 rem;
-  border: none !important;
-}
-
-.player-box {
-  padding: 10px 14px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.player-box table {
-  width: 100%;
-}
-
-.player-name {
-  font-weight: bold;
-  font-size: 0.95em;
-}
-.white .player-name { color: #e0e0e0; }
-.black .player-name { color: #e0e0e0; }
-
-.timer {
-  font-size: 1.1em;
-  font-weight: bold;
-  color: #03a9f4;
-}
-
-/* === Control Bar === */
-.control-bar-container {
-  background: transparent;
-  padding: 0 !important;
-  border: none !important;
-  box-shadow: none !important;
-}
-
-.control-bar {
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 3px;
-  table-layout: fixed;
-}
-
-.control-bar td {
-  padding: 0;
-  text-align: center;
-  background: #2c2c2c;
-  border: 1px solid #444444;
-  transition: background 0.2s;
-}
-
-.control-bar td:hover {
-  background: #383838;
-}
-.control-bar td:active {
-  background: #454545;
-}
-
-.icon-btn {
-  background: transparent;
-  border: none;
-  padding: 8px; /* Adjusted padding for button content */
-  cursor: pointer;
-  display: flex;
-  flex-direction: column; /* Stack icon and text */
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  color: #b0b0b0; /* Text color for button */
-  font-size: 0.7em; /* Smaller font for button text */
-  gap: 2px; /* Space between icon and text */
-}
-.icon-btn:disabled {
-    cursor: not-allowed;
-    opacity: 0.6;
-}
-
-.icon-btn svg {
-  width: 20px; /* Slightly smaller icons */
-  height: 20px;
-  fill: #b0b0b0;
-  display: block;
-  transition: fill 0.2s;
-}
-
-.icon-btn:hover:not(:disabled) svg {
-  fill: #e0e0e0;
-}
-.icon-btn:hover:not(:disabled) {
-  color: #e0e0e0;
-}
-
-
-/* === Modal Styles === */
-.modal {
-  display: none; /* Hidden by default */
-  position: fixed;
-  z-index: 1000;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgba(0,0,0,0.7); /* Darker overlay */
-  padding-top: 60px;
-}
-
-.modal-content {
-  background-color: #2a2a2a; /* Dark background for modal */
-  color: #e0e0e0; /* Light text */
-  margin: 5% auto;
-  padding: 20px;
-  border: 1px solid #444;
-  width: 80%;
-  max-width: 600px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-  position: relative;
-}
-
-.modal-header {
-  padding-bottom: 10px;
-  border-bottom: 1px solid #444;
-  margin-bottom: 15px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.modal-header h2 {
-  margin: 0;
-  color: #03a9f4; /* Accent color for header */
-  font-size: 1.4em;
-}
-
-.close-btn {
-  color: #aaa;
-  font-size: 28px;
-  font-weight: bold;
-  cursor: pointer;
-  background: none;
-  border: none;
-}
-
-.close-btn:hover,
-.close-btn:focus {
-  color: #fff;
-  text-decoration: none;
-}
-
-.modal-body {
-  max-height: 60vh;
-  overflow-y: auto;
-  line-height: 1.6;
-  white-space: pre-wrap; /* Preserve line breaks from API */
-}
-
-.loading-spinner {
-  border: 4px solid #444; /* Light grey border */
-  border-top: 4px solid #03a9f4; /* Blue */
-  border-radius: 50%;
-  width: 30px;
-  height: 30px;
-  animation: spin 1s linear infinite;
-  margin: 20px auto;
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-
-/* === Custom Board Image Configuration === */
-
-/* 1. Set your PNG as the background for the board container */
-#board {
-  background-image: url("board/wood4.jpg"); /* Or the correct path to your image */
-  background-size: 100% 100%; /* Stretches the image to fit the container */
-  background-repeat: no-repeat;
-  border: none !important; /* This is already in your code, but good to ensure */
-  margin: 0px !important;
-  padding: 0px !important;
-  aspect-ratio: 1;
-  width: 80%;
-  border: 0px solid green !important;
-}
-
-/* === Portrait Layout === */
-@media (max-aspect-ratio: 1/1) {
-/* Styles applied when height is greater than width */
-    #board {
+    .playing-status table {
       width: 100%;
-      aspect-ratio: 1;
     }
-    
-    #board > div {
-      transform: scale(1.00705); /* Scale up slightly to fill gaps */
-      transform-origin: center center;
+
+    .playing-status .back svg,
+    #settingsBtn svg {
+      fill: #e0e0e0;
+      transition: fill 0.2s;
     }
-    
-    /* === Move History Fixes === */
+
+    .playing-status .back:hover svg {
+      fill: #ffffff;
+    }
+
     .movehist {
-      overflow: hidden; /* Changed from auto to contain children */
+      overflow-y: auto;
       color: #c0c0c0;
-      display: flex; /* Add flex to contain children properly */
     }
-    
-    .movehist, .hist-container, .hist, .move-history{
-        padding: 0px;
-    }
-    
+
     .movehist .hist {
       width: 100%;
-      display: table; /* Ensure table respects container */
     }
-    
-    .move-history {
+
+    .board-container {
       display: flex;
-      overflow-x: auto;
-      overflow-y: hidden;
-      white-space: nowrap;
-      box-sizing: border-box;
-      width: 100%; /* Ensure it respects parent width */
-      max-width: 100%; /* Prevent growing beyond parent */
-      padding: 0px 5px;
-      gap: 0.5em;
-      font-family: monospace;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 0px;
+      border: none !important;
     }
-    
-    .hist-container {
-      width: 100%;
-      overflow: hidden; /* Contain the table */
+
+    #board {
+      margin: 0px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      place-items: center;
+      text-align: center;
+      width: 100px;
+      font-size: 0.75 rem;
+      border: none !important;
     }
-    
-    .hist {
-      width: 100%;
-      table-layout: fixed; /* Make table respect width */
-    }
-    
-    .hist td {
-      padding: 0;
-    }
-    
+
     .player-box {
-        flex-grow: 1;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
-}
+
+    .player-box table {
+      width: 100%;
+    }
+
+    .player-name {
+      font-weight: bold;
+      font-size: 0.95em;
+    }
+
+    .white .player-name {
+      color: #e0e0e0;
+    }
+
+    .black .player-name {
+      color: #e0e0e0;
+    }
+
+    .timer {
+      font-size: 1.1em;
+      font-weight: bold;
+      color: #03a9f4;
+    }
+
+    /* === Control Bar === */
+    .control-bar-container {
+      background: transparent;
+      padding: 0 !important;
+      border: none !important;
+      box-shadow: none !important;
+    }
+
+    .control-bar {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 3px;
+      table-layout: fixed;
+    }
+
+    .control-bar td {
+      padding: 0;
+      text-align: center;
+      background: #2c2c2c;
+      border: 1px solid #444444;
+      transition: background 0.2s;
+    }
+
+    .control-bar td:hover {
+      background: #383838;
+    }
+
+    .control-bar td:active {
+      background: #454545;
+    }
+
+    .icon-btn {
+      background: transparent;
+      border: none;
+      padding: 8px;
+      /* Adjusted padding for button content */
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      /* Stack icon and text */
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      color: #b0b0b0;
+      /* Text color for button */
+      font-size: 0.7em;
+      /* Smaller font for button text */
+      gap: 2px;
+      /* Space between icon and text */
+    }
+
+    .icon-btn:disabled {
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+
+    .icon-btn svg {
+      width: 20px;
+      /* Slightly smaller icons */
+      height: 20px;
+      fill: #b0b0b0;
+      display: block;
+      transition: fill 0.2s;
+    }
+
+    .icon-btn:hover:not(:disabled) svg {
+      fill: #e0e0e0;
+    }
+
+    .icon-btn:hover:not(:disabled) {
+      color: #e0e0e0;
+    }
 
 
-/* === Landscape Layout === */
-/* minmax(180px, 1fr) minmax(auto, 100%) minmax(180px, 1fr); */
-@media (orientation: landscape) {
-  .wrapper {
-    display: grid;
-    grid-template:
-      "status board black" min-content
-      "status board controls" min-content
-      "status board movehist" 1fr
-      "status board white" min-content
-      / 1fr 2fr 1fr;
-    gap: 8px;
-    height: 100%;
-    padding: 8px; //3fr
-  }
+    /* === Modal Styles === */
+    .modal {
+      display: none;
+      /* Hidden by default */
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.7);
+      /* Darker overlay */
+      padding-top: 60px;
+    }
 
-  .wrapper.flipped {
-    grid-template:
-      "status board white" min-content
-      "status board controls" min-content
-      "status board movehist" 1fr
-      "status board black" min-content
-      / 1fr 2fr 1fr;
-  }
+    .modal-content {
+      background-color: #2a2a2a;
+      /* Dark background for modal */
+      color: #e0e0e0;
+      /* Light text */
+      margin: 5% auto;
+      padding: 20px;
+      border: 1px solid #444;
+      width: 80%;
+      max-width: 600px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+      position: relative;
+    }
 
-  .playing-status { grid-area: status; }
-  .board-container { grid-area: board; }
-  .player-info.white { grid-area: white }
-  .control-bar-container { grid-area: controls; }
-  .movehist { grid-area: movehist; }
-  .player-info.black { grid-area: black; }
+    .modal-header {
+      padding-bottom: 10px;
+      border-bottom: 1px solid #444;
+      margin-bottom: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
+    .modal-header h2 {
+      margin: 0;
+      color: #03a9f4;
+      /* Accent color for header */
+      font-size: 1.4em;
+    }
 
-  .wrapper > div, .control-bar-container {
-    min-height: 0;
-    height: 100%;
-  }
+    .close-btn {
+      color: #aaa;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+      background: none;
+      border: none;
+    }
 
-  .movehist {
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-  
-  .move-history {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5em;
-    overflow-x: hidden;
-    overflow-y: auto;
-    white-space: normal;
-    color: #c0c0c0;
-    padding: 5px;
-    flex-grow: 1;
-  }
+    .close-btn:hover,
+    .close-btn:focus {
+      color: #fff;
+      text-decoration: none;
+    }
 
-  .movehist .move-history {
-    font-family: monospace;
-    font-size: 0.9em;
-    word-break: break-all;
-  }
+    .modal-body {
+      max-height: 60vh;
+      overflow-y: auto;
+      line-height: 1.6;
+      white-space: pre-wrap;
+      /* Preserve line breaks from API */
+    }
 
-  .playing-status table {
-    width: 100%;
-    display: block;
-  }
-  
-  .playing-status table tbody {
-    display: block;
-  }
-  
-  .playing-status table tr {
-    display: block;
-    margin-bottom: 10px;
-  }
-  
-  .playing-status table td {
-    display: block;
-    text-align: left;
-    padding: 5px 0;
-  }
+    .loading-spinner {
+      border: 4px solid #444;
+      /* Light grey border */
+      border-top: 4px solid #03a9f4;
+      /* Blue */
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      animation: spin 1s linear infinite;
+      margin: 20px auto;
+    }
 
-}
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
 
-.player-box table td {
-  vertical-align: middle;
-}
-.player-box .player-name {
-  margin-right: 10px;
-}
-
-
-.wrapper.flipped :nth-child(3) { order: 5; }
-.wrapper.flipped :nth-child(4) { order: 4; }
-.wrapper.flipped :nth-child(5) { order: 3; }
-.wrapper.flipped :nth-child(6) { order: 6; }
-
-/* === Mobile Optimization === */
-@media (max-width: 768px) {
-  .wrapper {
-    gap: 0px;
-  }
-  
-  .wrapper > .player-box, .control-bar-container {
-    padding: 8px;
-    font-size: 0.85em;
-  }
-
-  .icon-btn svg {
-    width: 18px; /* Even smaller for mobile */
-    height: 18px;
-  }
-   .icon-btn {
-    font-size: 0.65em;
-   }
-  .timer { font-size: 1em; }
-  .player-name { font-size: 0.9em; }
-
-}
+      100% {
+        transform: rotate(360deg);
+      }
+    }
 
 
+    /* === Custom Board Image Configuration === */
 
-/* A very subtle gloss effect using a pseudo-element */
-.white-1e1d7z::before, .black-3c85dz::before {
-  content: '';
-  position: absolute;
-  top: 2%;
-  left: 2%;
-  width: 96%;
-  height: 96%;
-  background: linear-gradient(rgba(255,255,255,0.07), rgba(255,255,255,0.0)); /* Faint highlight from top */
-  border-radius: 2px; /* Soften the highlight edge */
-  pointer-events: none; /* Make sure it doesn't interfere with mouse events */
-}
+    /* 1. Set your PNG as the background for the board container */
+    #board {
+      background-image: url("board/wood4.jpg");
+      /* Or the correct path to your image */
+      background-size: 100% 100%;
+      /* Stretches the image to fit the container */
+      background-repeat: no-repeat;
+      border: none !important;
+      /* This is already in your code, but good to ensure */
+      margin: 0px !important;
+      padding: 0px !important;
+      aspect-ratio: 1;
+      width: 80%;
+      border: 0px solid green !important;
+    }
+
+    /* === Portrait Layout === */
+    @media (max-aspect-ratio: 1/1) {
+
+      /* Styles applied when height is greater than width */
+      #board {
+        width: 100%;
+        aspect-ratio: 1;
+      }
+
+      #board>div {
+        transform: scale(1.00705);
+        /* Scale up slightly to fill gaps */
+        transform-origin: center center;
+      }
+
+      /* === Move History Fixes === */
+      .movehist {
+        overflow: hidden;
+        /* Changed from auto to contain children */
+        color: #c0c0c0;
+        display: flex;
+        /* Add flex to contain children properly */
+      }
+
+      .movehist,
+      .hist-container,
+      .hist,
+      .move-history {
+        padding: 0px;
+      }
+
+      .movehist .hist {
+        width: 100%;
+        display: table;
+        /* Ensure table respects container */
+      }
+
+      .move-history {
+        display: flex;
+        overflow-x: auto;
+        overflow-y: hidden;
+        white-space: nowrap;
+        box-sizing: border-box;
+        width: 100%;
+        /* Ensure it respects parent width */
+        max-width: 100%;
+        /* Prevent growing beyond parent */
+        padding: 0px 5px;
+        gap: 0.5em;
+        font-family: monospace;
+      }
+
+      .hist-container {
+        width: 100%;
+        overflow: hidden;
+        /* Contain the table */
+      }
+
+      .hist {
+        width: 100%;
+        table-layout: fixed;
+        /* Make table respect width */
+      }
+
+      .hist td {
+        padding: 0;
+      }
+
+      .player-box {
+        flex-grow: 1;
+      }
+    }
 
 
-/* 2. Make the default squares transparent so the background image is visible */
-/* These class names are default for chessboard.js v1.0.0 */
-.white-1e1d7, .black-3c85d {
-  //background-color: transparent !important;
-  justify-content: center !important;
-  align-items: center !important;
-  text-align: center !important;
-  /* Remove the custom gloss effect you added, as it's no longer needed */
-  box-shadow: none !important; 
-}
+    /* === Landscape Layout === */
+    /* minmax(180px, 1fr) minmax(auto, 100%) minmax(180px, 1fr); */
+    @media (orientation: landscape) {
+      .wrapper {
+        display: grid;
+        grid-template:
+          "status board black" min-content
+          "status board controls" min-content
+          "status board movehist" 1fr
+          "status board white" min-content
+          / 1fr 2fr 1fr;
+        gap: 8px;
+        height: 100%;
+        padding: 8px;
+        /*3fr */
+      }
 
-/* 3. Remove the pseudo-element gloss effect from your original CSS */
-.white-1e1d7::before, .black-3c85d::before {
-  display: none !important; /* Hide the gloss effect */
-}
+      .wrapper.flipped {
+        grid-template:
+          "status board white" min-content
+          "status board controls" min-content
+          "status board movehist" 1fr
+          "status board black" min-content
+          / 1fr 2fr 1fr;
+      }
 
-.board-container {
-    margin: 0px;
-    padding: 0px !important;
-    /* border: 4px solid green; */ /* Remove this debug border */
-    border: 1px solid #111 !important; /* Or use this to ensure no border */
-    display: flex;
-    justify-content: center !important;
-    align-items: center !important;
-    text-align: center !important;
-}
+      .playing-status {
+        grid-area: status;
+      }
+
+      .board-container {
+        grid-area: board;
+      }
+
+      .player-info.white {
+        grid-area: white
+      }
+
+      .control-bar-container {
+        grid-area: controls;
+      }
+
+      .movehist {
+        grid-area: movehist;
+      }
+
+      .player-info.black {
+        grid-area: black;
+      }
 
 
-#board {
-  overflow: hidden; /* Hide any overflow from scaling */
-}
+      .wrapper>div,
+      .control-bar-container {
+        min-height: 0;
+        height: 100%;
+      }
+
+      .movehist {
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .move-history {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5em;
+        overflow-x: hidden;
+        overflow-y: auto;
+        white-space: normal;
+        color: #c0c0c0;
+        padding: 5px;
+        flex-grow: 1;
+      }
+
+      .movehist .move-history {
+        font-family: monospace;
+        font-size: 0.9em;
+        word-break: break-all;
+      }
+
+      .playing-status table {
+        width: 100%;
+        display: block;
+      }
+
+      .playing-status table tbody {
+        display: block;
+      }
+
+      .playing-status table tr {
+        display: block;
+        margin-bottom: 10px;
+      }
+
+      .playing-status table td {
+        display: block;
+        text-align: left;
+        padding: 5px 0;
+      }
+
+    }
+
+    .player-box table td {
+      vertical-align: middle;
+    }
+
+    .player-box .player-name {
+      margin-right: 10px;
+    }
 
 
-.critical {
-  color: #ffa500;
-  font-weight: bold;
-}
-  
-.super-critical {
-  color: #ff4444;
-  animation: blink 0.5s infinite;
-}
-  
-@keyframes blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
-}
-  
-.highlight {
-  background-color: rgba(100, 255, 0, 0.3) !important;
-}
-  
-.square-highlight::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 20%;
-  height: 20%;
-  background: rgba(0, 0, 0, 0.3);
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-}
-  
-.premove-from, .premove-to {
-  background-color: rgba(100, 255, 0, 0.3) !important;
-}
-  
-.highlight-check {
-  background-color: #ff0000 !important;
-  box-shadow: inset 0 0 10px 2px rgba(255, 0, 0, 0.8);
-}
+    .wrapper.flipped :nth-child(3) {
+      order: 5;
+    }
 
-img{
-    pointer-events: none;
-}
+    .wrapper.flipped :nth-child(4) {
+      order: 4;
+    }
 
-</style>
+    .wrapper.flipped :nth-child(5) {
+      order: 3;
+    }
 
-   <audio id="alert-move" src="sounds/move.mp3" preload="auto"></audio>
-   <audio id="alert-castles" src="sounds/castles.mp3" preload="auto"></audio>
-   <audio id="alert-lowtime" src="sounds/LowTime.mp3" preload="auto"></audio>
-   <audio id="alert-check" src="sounds/Check.mp3" preload="auto"></audio>
-   <audio id="alert-win" src="sounds/Victory.mp3" preload="auto"></audio>
-   <audio id="alert-draw" src="sounds/Draw.mp3" preload="auto"></audio>
-   <audio id="alert-lose" src="sounds/Defeat.mp3" preload="auto"></audio>
+    .wrapper.flipped :nth-child(6) {
+      order: 6;
+    }
+
+    /* === Mobile Optimization === */
+    @media (max-width: 768px) {
+      .wrapper {
+        gap: 0px;
+      }
+
+      .wrapper>.player-box,
+      .control-bar-container {
+        padding: 8px;
+        font-size: 0.85em;
+      }
+
+      .icon-btn svg {
+        width: 18px;
+        /* Even smaller for mobile */
+        height: 18px;
+      }
+
+      .icon-btn {
+        font-size: 0.65em;
+      }
+
+      .timer {
+        font-size: 1em;
+      }
+
+      .player-name {
+        font-size: 0.9em;
+      }
+
+    }
+
+
+
+    /* A very subtle gloss effect using a pseudo-element */
+    .white-1e1d7z::before,
+    .black-3c85dz::before {
+      content: '';
+      position: absolute;
+      top: 2%;
+      left: 2%;
+      width: 96%;
+      height: 96%;
+      background: linear-gradient(rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.0));
+      /* Faint highlight from top */
+      border-radius: 2px;
+      /* Soften the highlight edge */
+      pointer-events: none;
+      /* Make sure it doesn't interfere with mouse events */
+    }
+
+
+    /* 2. Make the default squares transparent so the background image is visible */
+    /* These class names are default for chessboard.js v1.0.0 */
+    .white-1e1d7,
+    .black-3c85d {
+      /* background-color: transparent !important; */
+      justify-content: center !important;
+      align-items: center !important;
+      text-align: center !important;
+      /* Remove the custom gloss effect you added, as it's no longer needed */
+      box-shadow: none !important;
+    }
+
+    /* 3. Remove the pseudo-element gloss effect from your original CSS */
+    .white-1e1d7::before,
+    .black-3c85d::before {
+      display: none !important;
+      /* Hide the gloss effect */
+    }
+
+    .board-container {
+      margin: 0px;
+      padding: 0px !important;
+      /* border: 4px solid green; */
+      /* Remove this debug border */
+      border: 1px solid #111 !important;
+      /* Or use this to ensure no border */
+      display: flex;
+      justify-content: center !important;
+      align-items: center !important;
+      text-align: center !important;
+    }
+
+
+    #board {
+      overflow: hidden;
+      /* Hide any overflow from scaling */
+    }
+
+
+    .critical {
+      color: #ffa500;
+      font-weight: bold;
+    }
+
+    .super-critical {
+      color: #ff4444;
+      animation: blink 0.5s infinite;
+    }
+
+    @keyframes blink {
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0.5;
+      }
+    }
+
+    .highlight {
+      background-color: rgba(100, 255, 0, 0.3) !important;
+    }
+
+    .square-highlight::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 20%;
+      height: 20%;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
+    .premove-from,
+    .premove-to {
+      background-color: rgba(100, 255, 0, 0.3) !important;
+    }
+
+    .highlight-check {
+      background-color: #ff0000 !important;
+      box-shadow: inset 0 0 10px 2px rgba(255, 0, 0, 0.8);
+    }
+
+    img {
+      pointer-events: none;
+    }
+  </style>
+
+  <audio id="alert-move" src="sounds/move.mp3" preload="auto"></audio>
+  <audio id="alert-castles" src="sounds/castles.mp3" preload="auto"></audio>
+  <audio id="alert-lowtime" src="sounds/LowTime.mp3" preload="auto"></audio>
+  <audio id="alert-check" src="sounds/Check.mp3" preload="auto"></audio>
+  <audio id="alert-win" src="sounds/Victory.mp3" preload="auto"></audio>
+  <audio id="alert-draw" src="sounds/Draw.mp3" preload="auto"></audio>
+  <audio id="alert-lose" src="sounds/Defeat.mp3" preload="auto"></audio>
 
 </head>
+
 <body>
   <div class="wrapper">
 
@@ -582,11 +687,12 @@ img{
       <table>
         <tr>
           <td class="back" style="width: 40px; padding: 8px; cursor: pointer;">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-              <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24"
+              height="24">
+              <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" />
             </svg>
           </td>
-          <td class="playingNow" style="padding: 8px; white-space: nowrap;">
+          <td class=" playingNow" style="padding: 8px; white-space: nowrap;">
             Playing now •
           </td>
           <td style="width: 100%; text-align: left; padding-left: 5px;">
@@ -594,14 +700,17 @@ img{
           </td>
           <td id="settingsBtn" style="width: 40px; padding: 8px; cursor: pointer; text-align: right;">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-              <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
+              <path
+                d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />
             </svg>
           </td>
         </tr>
-        <tr><td></td></tr>
+        <tr>
+          <td></td>
+        </tr>
       </table>
     </div>
-    
+
     <div class="movehist">
       <div class="hist-container"> <!-- Add this wrapper -->
         <table class="hist">
@@ -613,42 +722,46 @@ img{
         </table>
       </div>
     </div>
-    
+
     <div class="player-info black player-box">
-      <table><tr>
-        <td>
-          <div class="player-name black" id="black-name">♚ Black Player (1520)</div>
-          <div class='black-advantage'></div>
-        </td>
-        <td style="text-align: right;">
-          <div class="timer" id="black-timer">05:00</div>
-        </td>
-      </tr></table>
+      <table>
+        <tr>
+          <td>
+            <div class="player-name black" id="black-name">♚ Black Player (1520)</div>
+            <div class='black-advantage'></div>
+          </td>
+          <td style="text-align: right;">
+            <div class="timer" id="black-timer">05:00</div>
+          </td>
+        </tr>
+      </table>
     </div>
 
     <div class="board-container">
       <div id="board"></div>
     </div>
-    
+
     <div class="player-info white player-box">
-      <table><tr>
-        <td>
-          <div class="player-name white" id="white-name">♔ White Player (1520)</div>
-          <div class='white-advantage'></div>
-        </td>
-        <td style="text-align: right;">
-          <div class="timer" id="white-timer">05:00</div>
-        </td>
-      </tr></table>
+      <table>
+        <tr>
+          <td>
+            <div class="player-name white" id="white-name">♔ White Player (1520)</div>
+            <div class='white-advantage'></div>
+          </td>
+          <td style="text-align: right;">
+            <div class="timer" id="white-timer">05:00</div>
+          </td>
+        </tr>
+      </table>
     </div>
-    
+
     <div class="control-bar-container">
       <table class="control-bar">
         <tr>
           <td>
             <button id='menuBtn' class="icon-btn" title="Menu">
               <svg viewBox="0 0 24 24">
-                <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
               </svg>
               <span>Menu</span>
             </button>
@@ -656,7 +769,8 @@ img{
           <td>
             <button id='newgame' class="icon-btn" title="New Game">
               <svg viewBox="0 0 24 24">
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/>
+                <path
+                  d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z" />
               </svg>
               <span>New Game</span>
             </button>
@@ -664,7 +778,7 @@ img{
           <td>
             <button id="backbtn" class="icon-btn" title="Go Back">
               <svg viewBox="0 0 24 24">
-                <path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z"/>
+                <path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z" />
               </svg>
               <span>Back</span>
             </button>
@@ -672,7 +786,7 @@ img{
           <td>
             <button id='forwardbtn' class="icon-btn" title="Go Forward">
               <svg viewBox="0 0 24 24">
-                <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/>
+                <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z" />
               </svg>
               <span>Forward</span>
             </button>
@@ -680,8 +794,10 @@ img{
           <td> <!-- Added Gemini Analyze Button -->
             <button id='analyzePositionBtn' class="icon-btn" title="Analyze Position with AI">
               <svg viewBox="0 0 24 24"> <!-- Simple brain/idea icon -->
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v2h-2zm0 3h2v6h-2z"/>
-                 <text x="12" y="19" font-family="Arial" font-size="3px" fill="#b0b0b0" text-anchor="middle">AI</text> <!-- Tiny AI text inside circle -->
+                <path
+                  d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v2h-2zm0 3h2v6h-2z" />
+                <text x="12" y="19" font-family="Arial" font-size="3px" fill="#b0b0b0" text-anchor="middle">AI</text>
+                <!-- Tiny AI text inside circle -->
               </svg>
               <span>✨ Analyze</span>
             </button>
@@ -689,7 +805,7 @@ img{
         </tr>
       </table>
     </div>
-    
+
   </div>
 
   <!-- Modal for AI Analysis -->
@@ -706,35 +822,35 @@ img{
     </div>
   </div>
 
-   <!-- Modal for Game Menu -->
-   <div id="gameMenuModal" class="modal">
-     <div class="modal-content">
-       <div class="modal-header">
-         <h2>⚙️ Game Menu</h2>
-         <button id="closeGameMenuBtn" class="close-btn">&times;</button>
-       </div>
-       <div class="modal-body">
-         <div class="menu-options">
-           <button id="resignBtn" class="menu-option-btn resign-btn">
-             <span class="menu-icon">🏳️</span>
-             <span class="menu-text">Resign Game</span>
-           </button>
-           <button id="offerDrawBtn" class="menu-option-btn draw-btn">
-             <span class="menu-icon">🤝</span>
-             <span class="menu-text">Offer Draw</span>
-           </button>
-         </div>
-       </div>
-     </div>
-   </div>
+  <!-- Modal for Game Menu -->
+  <div id="gameMenuModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>⚙️ Game Menu</h2>
+        <button id="closeGameMenuBtn" class="close-btn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="menu-options">
+          <button id="resignBtn" class="menu-option-btn resign-btn">
+            <span class="menu-icon">🏳️</span>
+            <span class="menu-text">Resign Game</span>
+          </button>
+          <button id="offerDrawBtn" class="menu-option-btn draw-btn">
+            <span class="menu-icon">🤝</span>
+            <span class="menu-text">Offer Draw</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 
-<script src="scripts/jquery-3.7.1.min.js"></script>
-<script src="scripts/chessboard-1.0.0.min.js"></script>
-<!-- chess.js (v1.x) - Make sure to include this library -->
-<script src="scripts/chess.js"></script>
-<script src="scripts/Game_configs.js"></script>
-<script defer src="scripts/Layout_configs.js"></script>
+  <script src="scripts/jquery-3.7.1.min.js"></script>
+  <script src="scripts/chessboard-1.0.0.min.js"></script>
+  <!-- chess.js (v1.x) - Make sure to include this library -->
+  <script src="scripts/chess.js"></script>
+  <script src="scripts/Game_configs.js"></script>
+  <script defer src="scripts/Layout_configs.js"></script>
 
 </body>
-</html>
 
+</html>
